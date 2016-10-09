@@ -2,9 +2,7 @@ tabulated_functions/
 x_answer.txt
 y_answer.txt
 
-# Created by https://www.gitignore.io/api/pyth,python
-
-#!! ERROR: pyth is undefined. Use list command to see defined gitignore types !!#
+# Created by https://www.gitignore.io/api/python
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -88,7 +86,6 @@ celerybeat-schedule
 .env
 
 # virtualenv
-.venv/
 venv/
 ENV/
 
