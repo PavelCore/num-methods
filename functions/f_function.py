@@ -9,11 +9,13 @@ class FFunction(BaseFunction):
 
     def __init__(self, params):
         # beta -- 0
-        # z(t) -- 1
+        # s(t) -- 1
+        # z(t) -- 2
         super().__init__(params)
 
     def calculate(self, t, x_t):
-        return self.params[0] * (x_t - self.params[1].calculate(t))
+        z_derivate = (self.params[2].calculate(t + 1/10000) - self.params[2].calculate(t)) / (1/10000)
+        return self.params[0] * (x_t - self.params[1].calculate(t)) * z_derivate
 
     def tabulate(self):
         pass

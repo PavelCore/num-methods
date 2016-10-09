@@ -14,7 +14,7 @@ def initialize_functions():
 
     print("write parameter for z(t) (one float)\none parameter -- one line")
     #z_par = float(input())
-    z_par = 4
+    z_par = 5
     z_func = z_function.ZFunction([z_par])
 
     print("write parameter for s(t)\none parameter -- one line")
@@ -28,7 +28,7 @@ def initialize_functions():
 def get_initial_parameters():
     print("enter x0, y0, beta, T\none parameter -- one line")
     #x_0, y_0, beta, T = float(input()), float(input()), float(input()), float(input())
-    x_0, y_0, beta, T = 0, 0, 0.01, 1
+    x_0, y_0, beta, T = 0, 0, 1, 1
     return x_0, y_0, beta, T
 
 
@@ -121,7 +121,7 @@ def main():
     u_interpolated = integral  # delete this later
 
     # Initialize f function
-    f_func = f_function.FFunction([beta, z_interpolated])
+    f_func = f_function.FFunction([beta, s_interpolated, z_interpolated])
 
     cauchi_problem.solve(x_0, y_0, beta, T,  N,
                          p_interpolated, z_interpolated,
