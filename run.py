@@ -35,68 +35,6 @@ def get_initial_parameters():
     return x_0, y_0, beta, T
 
 
-def draw_graphics():
-    plt.figure(1)
-
-    # initialize plots data and add them as subplot
-    t_x, x = [], []
-    with open("x_answer.txt", 'r') as f:
-        for line in f:
-            data = line.split(' ')
-            t_x.append(float(data[0]))
-            x.append(float(data[1]))
-    plt.subplot(231)
-    plt.plot(t_x, x)
-    plt.title('X(t)')
-
-    t_s, s = [], []
-    with open("tabulated_functions/s_func_tabulated", 'r') as f:
-        for line in f:
-            data = line.split(' ')
-            t_s.append(float(data[0]))
-            s.append(float(data[1]))
-    plt.subplot(232)
-    plt.plot(t_s, s)
-    plt.title('S(t)')
-
-    t_p, p = [], []
-    with open("tabulated_functions/p_func_tabulated", 'r') as f:
-        for line in f:
-            data = line.split(' ')
-            t_p.append(float(data[0]))
-            p.append(float(data[1]))
-    plt.subplot(233)
-    plt.plot(t_p, p)
-    plt.title('p(w)')
-
-    t_z, z = [], []
-    with open("tabulated_functions/z_func_tabulated", 'r') as f:
-        for line in f:
-            data = line.split(' ')
-            t_z.append(float(data[0]))
-            z.append(float(data[1]))
-    plt.subplot(234)
-    plt.plot(t_z, z)
-    plt.title('Z(t)')
-
-    x_s = [x[i] - s[i] for i in range(0, len(t_x))]
-    plt.subplot(235)
-    plt.plot(t_x, x_s)
-    plt.title('X(t) - S(t)')
-
-    t_y, y = [], []
-    with open("y_answer.txt", 'r') as f:
-        for line in f:
-            data = line.split(' ')
-            t_y.append(float(data[0]))
-            y.append(float(data[1]))
-    plt.subplot(236)
-    plt.plot(t_y, y)
-    plt.title('Y(t)')
-
-    plt.show()
-
-
 def main(a, b, c, d, x_0, y_0, beta, T):
     N = 10000
 
