@@ -1,11 +1,14 @@
 import numpy
+import sys
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from PyQt5.QtWidgets import QApplication as QApp5
 import cauchi_problem
+import ui
 from functions import z_function, p_function, s_function, integral_p, \
                       interpolated_function, f_function
 
-def initialize_functions():
+def initialize_functions(a, b, c, d):
     # Write normal input later
     print("write parameters for p(w) (a, b)\none parameter -- one line")
     #a, b = float(input()), float(input())
@@ -14,13 +17,13 @@ def initialize_functions():
 
     print("write parameter for z(t) (one float)\none parameter -- one line")
     #z_par = float(input())
-    z_par = 5
-    z_func = z_function.ZFunction([z_par])
+    c = 5
+    z_func = z_function.ZFunction([c])
 
     print("write parameter for s(t)\none parameter -- one line")
     #s_par = float(input())
-    s_par = 3
-    s_func = s_function.SFunction([s_par])
+    d = 3
+    s_func = s_function.SFunction([d])
 
     return p_func, z_func, s_func
 
@@ -94,13 +97,11 @@ def draw_graphics():
     plt.show()
 
 
-def main():
-    # Get parameters (x0, y0, beta, T)
-    x_0, y_0, beta, T = get_initial_parameters()
+def main(a, b, c, d, x_0, y_0, beta, T):
     N = 10000
 
-    # Get function parameters and initialize functions
-    p_func, z_func, s_func = initialize_functions()
+    # initialize functions
+    p_func, z_func, s_func = initialize_functions(a, b, c ,d)
 
     
     # Tabulate them
@@ -126,8 +127,12 @@ def main():
     cauchi_problem.solve(x_0, y_0, beta, T,  N,
                          p_interpolated, z_interpolated,
                          s_interpolated, u_interpolated, f_func)
-    draw_graphics()
+    ui.draw_graphics()
 
 
 if __name__ == '__main__':
-    main()
+    app = QApp5(sys.argv)
+    window = ui.Window(main)
+    sys.exit(app.exec_())
+
+    #main()
