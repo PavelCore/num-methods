@@ -1,7 +1,5 @@
 import numpy
 import sys
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from PyQt5.QtWidgets import QApplication as QApp5
 import cauchi_problem
 import ui
@@ -35,7 +33,7 @@ def get_initial_parameters():
     return x_0, y_0, beta, T
 
 
-def main(a, b, c, d, x_0, y_0, beta, T):
+def main(a, b, c, d, x_0, y_0, beta, T, calculating_mod):
     N = 10000
 
     # initialize functions
@@ -72,5 +70,3 @@ if __name__ == '__main__':
     app = QApp5(sys.argv)
     window = ui.Window(main)
     sys.exit(app.exec_())
-
-    #main()

@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, 
-    QGridLayout, QApplication, QPushButton)
+    QGridLayout, QApplication, QPushButton, QComboBox)
 
 
 class Window(QWidget):
@@ -18,7 +17,9 @@ class Window(QWidget):
     y_0_edit = None
     beta_edit = None
     T_edit = None
-
+    info_text = None
+    convertion_error_text = "WRONG INPUT FORMAT"
+    calculating_mod = "manual"
 
     def __init__(self, click_function):
         super().__init__()
@@ -29,6 +30,7 @@ class Window(QWidget):
 
     def initUI(self):
 
+        self.info_text = QLabel('')
         z_descr = QLabel('Enter c parameter for z function: c * t - cos(t))')
         z_par_descr = QLabel('c: ')
         s_descr = QLabel('Enter d parameter for s function: d * t + sin(t)')
@@ -52,6 +54,12 @@ class Window(QWidget):
         self.T_edit = QLineEdit()
 
         submit_btn = QPushButton("submit", self)
+        submit_btn.clicked.connect(self.on_button_click)
+
+        comboBox = QComboBox(self)
+        comboBox.addItem("manual")
+        comboBox.addItem("auto")
+        comboBox.activated[str].connect(self.update_calculating_mod)
 
         grid = QGridLayout()
 
@@ -80,7 +88,10 @@ class Window(QWidget):
         grid.addWidget(self.T_edit, 12, 1)
 
         grid.addWidget(submit_btn, 13, 0)
-        submit_btn.clicked.connect(self.on_button_click)
+
+        grid.addWidget(comboBox, 13, 1)
+
+        grid.addWidget(self.info_text, 14, 0)
 
         self.setLayout(grid)
 
@@ -89,15 +100,24 @@ class Window(QWidget):
         self.show()
 
     def on_button_click(self):
-        a = float(self.p_edit_a.text())
-        b = float(self.p_edit_b.text())
-        c = float(self.s_edit.text())
-        d = float(self.z_edit.text())
-        x_0 = float(self.x_0_edit.text())
-        y_0 = float(self.y_0_edit.text())
-        beta = float(self.beta_edit.text())
-        T = float(self.T_edit.text())
-        self.click_function(a, b, c, d, x_0, y_0, beta, T)
+        try:
+            a = float(self.p_edit_a.text())
+            b = float(self.p_edit_b.text())
+            c = float(self.s_edit.text())
+            d = float(self.z_edit.text())
+            x_0 = float(self.x_0_edit.text())
+            y_0 = float(self.y_0_edit.text())
+            beta = float(self.beta_edit.text())
+            T = float(self.T_edit.text())
+        except:
+            self.info_text.setText(self.convertion_error_text)
+            return
+
+        self.info_text.setText('')
+        self.click_function(a, b, c, d, x_0, y_0, beta, T, self.calculating_mod)
+
+    def update_calculating_mod(self, mod_text):
+        self.calculating_mod = mod_text
 
 
 def draw_graphics():
