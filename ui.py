@@ -16,10 +16,11 @@ class Window(QWidget):
     x_0_edit = None
     y_0_edit = None
     beta_edit = None
+    beta_edit_end = None
     T_edit = None
     info_text = None
     convertion_error_text = "WRONG INPUT FORMAT"
-    calculating_mod = "manual"
+    calculating_mod = "auto"
 
     def __init__(self, click_function):
         super().__init__()
@@ -51,14 +52,15 @@ class Window(QWidget):
         self.x_0_edit = QLineEdit()
         self.y_0_edit = QLineEdit()
         self.beta_edit = QLineEdit()
+        self.beta_edit_end = QLineEdit()
         self.T_edit = QLineEdit()
 
         submit_btn = QPushButton("submit", self)
         submit_btn.clicked.connect(self.on_button_click)
 
         comboBox = QComboBox(self)
-        comboBox.addItem("manual")
         comboBox.addItem("auto")
+        comboBox.addItem("manual")
         comboBox.activated[str].connect(self.update_calculating_mod)
 
         grid = QGridLayout()
@@ -85,6 +87,7 @@ class Window(QWidget):
         grid.addWidget(self.x_0_edit, 9, 1)
         grid.addWidget(self.y_0_edit, 10, 1)
         grid.addWidget(self.beta_edit, 11, 1)
+        grid.addWidget(self.beta_edit_end, 11, 2)
         grid.addWidget(self.T_edit, 12, 1)
 
         grid.addWidget(submit_btn, 13, 0)
@@ -103,8 +106,8 @@ class Window(QWidget):
         try:
             a = float(self.p_edit_a.text())
             b = float(self.p_edit_b.text())
-            c = float(self.s_edit.text())
-            d = float(self.z_edit.text())
+            d = float(self.s_edit.text())
+            c = float(self.z_edit.text())
             x_0 = float(self.x_0_edit.text())
             y_0 = float(self.y_0_edit.text())
             beta = float(self.beta_edit.text())
@@ -114,10 +117,22 @@ class Window(QWidget):
             return
 
         self.info_text.setText('')
-        self.click_function(a, b, c, d, x_0, y_0, beta, T, self.calculating_mod)
+        if self.calculating_mod == "manual":
+            self.click_function(a, b, c, d, x_0, y_0, beta, T, self.calculating_mod)
+        else:
+            try:
+                beta_end = float(self.beta_edit_end.text())
+            except:
+                self.info_text.setText(self.convertion_error_text)
+                return
+            self.click_function(a, b, c, d, x_0, y_0, [beta, beta_end], T, self.calculating_mod)
 
     def update_calculating_mod(self, mod_text):
         self.calculating_mod = mod_text
+        if mod_text == "manual":
+            self.beta_edit_end.setHidden(True)
+        else:
+            self.beta_edit_end.setHidden(False)
 
 
 def draw_graphics():

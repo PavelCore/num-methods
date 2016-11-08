@@ -10,14 +10,15 @@ def solve(x_0, y_0, beta, T, N,
         x_i = x_ans[-1]
         y_i = y_ans[-1]
         tau_i = t_range[i + 1] - t_range[i]
-        #derived_z_i = (z_func.calculate(t_range[i + 1]) - z_func.calculate(t_range[i])) / tau_i
-        derived_z_i = 4 - numpy.sin(t_range[i])
+        # Unused here because of the precision
+        # (z' = (z_i+1 - z_i) / tai_i)
+        # x = z' * tau_i * ........ = (z_i+1 - z_i) * ......
+        derived_z_i = (z_func.calculate(t_range[i + 1]) - z_func.calculate(t_range[i])) / tau_i
 
         x_ans.append((z_func.calculate(t_range[i + 1]) - z_func.calculate(t_range[i])) * u_func.calculate(y_i) + x_i)
         y_ans.append(tau_i * f_func.calculate(t_range[i], x_i) + y_i)
 
     print_solution(x_ans, y_ans, t_range)
-    print(y_ans[-1])
     print("C2:", numpy.abs(x_ans[-1] - s_func.calculate(T)) / s_func.calculate(T))
 
 

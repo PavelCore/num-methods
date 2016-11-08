@@ -7,7 +7,6 @@ class BaseFunction():
         pass
 
     def tabulate(self, points, filename):
-        # Here write tabulating
         with open("tabulated_functions/" + filename, 'w') as f:
             for x in points:
                 f.write("{} {}\n".format(x, self.calculate(x)))
