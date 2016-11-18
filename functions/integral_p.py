@@ -24,7 +24,7 @@ class IntegralP(BaseFunction):
         result += self.params.calculate(points[-1])
         for i in range(1, n):
             result += 2 * self.params.calculate(points[2 * i])
-        for i in range(1, n):
+        for i in range(1, n + 1):
             result += 4 * self.params.calculate(points[2 * i - 1])
         return result * h / 3
         #return 1/2 * self.a * self.b * (1 - np.power(y, 2)) - 1/3 * self.a * (1 - np.power(y, 3))
