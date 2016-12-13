@@ -2,7 +2,7 @@ import numpy as np
 from bisect import bisect_left
 from functions.base_function import BaseFunction
 
-class InterpolatedFunction(base_function.BaseFunction):
+class InterpolatedFunction(BaseFunction):
 
     def __init__(self, tabulated_func_filename, points=None):
         params = self.calculate_interpolation_coeffs(tabulated_func_filename, points)

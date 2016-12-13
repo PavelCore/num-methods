@@ -16,8 +16,10 @@ class FFunction(BaseFunction):
 
     def calculate(self, t, x_t):
         N = self.params[3]
-        z_derivate = (self.params[2].calculate(t + 1/N) - self.params[2].calculate(t)) * N
-        return self.params[0] * (x_t - self.params[1].calculate(t)) * z_derivate
+        #print("in f: t={0:.4f}, x(t)={1:.4f}, s(t)={2:.4f}, x(t) - s(t)={3:.4f}".format(t, x_t,
+        #        self.params[1].calculate(t),
+        #        x_t - self.params[1].calculate(t)))
+        return self.params[0] * (x_t - self.params[1].calculate(t))
 
     def tabulate(self):
         pass

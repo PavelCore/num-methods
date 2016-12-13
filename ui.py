@@ -32,7 +32,7 @@ class Window(QWidget):
     def initUI(self):
 
         self.info_text = QLabel('')
-        z_descr = QLabel('Enter c parameter for z function: c * t - cos(t))')
+        z_descr = QLabel('Enter c parameter for z function: c * t + cos(t))')
         z_par_descr = QLabel('c: ')
         s_descr = QLabel('Enter d parameter for s function: d * t + sin(t)')
         s_par_descr = QLabel('d: ')
@@ -149,34 +149,49 @@ def draw_graphics():
     plt.plot(t_x, x)
     plt.title('X(t)')
 
-    t_s, s = [], []
+    t_s, t_s_interp, s, s_interp = [], [], [], []
     with open("tabulated_functions/s_func_tabulated", 'r') as f:
         for line in f:
             data = line.split(' ')
             t_s.append(float(data[0]))
             s.append(float(data[1]))
+    with open("tabulated_functions/s_func_interp_tabulated", 'r') as f:
+        for line in f:
+            data = line.split(' ')
+            t_s_interp.append(float(data[0]))
+            s_interp.append(float(data[1]))
     plt.subplot(232)
-    plt.plot(t_s, s)
+    plt.plot(t_s, s, t_s_interp, s_interp)
     plt.title('S(t)')
 
-    t_p, p = [], []
+    t_p, t_p_interp, p, p_interp = [], [], [], []
     with open("tabulated_functions/p_func_tabulated", 'r') as f:
         for line in f:
             data = line.split(' ')
             t_p.append(float(data[0]))
             p.append(float(data[1]))
+    with open("tabulated_functions/p_func_interp_tabulated", 'r') as f:
+        for line in f:
+            data = line.split(' ')
+            t_p_interp.append(float(data[0]))
+            p_interp.append(float(data[1]))
     plt.subplot(233)
-    plt.plot(t_p, p)
+    plt.plot(t_p, p, t_p_interp, p_interp)
     plt.title('p(w)')
 
-    t_z, z = [], []
+    t_z, t_z_interp, z, z_interp = [], [], [], []
     with open("tabulated_functions/z_func_tabulated", 'r') as f:
         for line in f:
             data = line.split(' ')
             t_z.append(float(data[0]))
             z.append(float(data[1]))
+    with open("tabulated_functions/z_func_interp_tabulated", 'r') as f:
+        for line in f:
+            data = line.split(' ')
+            t_z_interp.append(float(data[0]))
+            z_interp.append(float(data[1]))
     plt.subplot(234)
-    plt.plot(t_z, z)
+    plt.plot(t_z, z, t_z_interp, z_interp)
     plt.title('Z(t)')
 
     x_s = [x[i] - s[i] for i in range(0, len(t_x))]
@@ -184,7 +199,7 @@ def draw_graphics():
     plt.plot(t_x, x_s)
     plt.title('X(t) - S(t)')
 
-    t_y, y = [], []
+    t_y, y, = [], []
     with open("y_answer.txt", 'r') as f:
         for line in f:
             data = line.split(' ')

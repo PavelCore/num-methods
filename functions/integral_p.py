@@ -9,14 +9,16 @@ class IntegralP(BaseFunction):
     def __init__(self, integrand):
         super().__init__(integrand)
 
-    def calculate(self, y, total_parts):
+    def calculate(self, y, total_parts=10000):
         # Integrate func here
-        #if y < 0:
-        #    return self.calculate(0)
+        if y <= 0:
+            return 1
+        if y >= 1:
+            return 0
         result = 0
         n = total_parts
-        h = y / (total_parts * 2)
-        points = numpy.linspace(0, y, num=n * 2 + 1)
+        h = (1 - y) / (total_parts * 2)
+        points = numpy.linspace(y, 1, num=n * 2 + 1)
 
         if len(points) == 0:
             return 0
